@@ -20,7 +20,7 @@ create `firebase.js` and install firebase with npm `npm i firebase`
 const app = firebase.initializeApp({ ... })  
 // `firebase` is a global namespace from which all Firebase services are accessed.  
 // initializeApp is a function  
-initializeApp ( options :  Object ,  name ? :  string ) : App
+initializeApp ( options :  Object ,  name ? :  string ) : App // return App
 ```
 ### Example  
 ```javascript
@@ -49,3 +49,33 @@ var otherApp = firebase.initializeApp({
   storageBucket: "<OTHER_STORAGE_BUCKET>.appspot.com"
 }, "nameOfOtherApp");
 ```
+## 4. firebase.auth  
+https://firebase.google.com/docs/reference/node/firebase.app    
+Gets the `Auth` service for the default app or a given app.  
+
+```js
+auth ( app ? :  App ) : Auth   // return Auth
+```
+example  
+```js
+// Get the Auth service for the default app
+var defaultAuth = firebase.auth();
+```
+```js
+const auth = app.auth(); // Get the Auth service for the default app
+// The above is shorthand for:
+// export const auth = firebase.auth(app);
+```
+## 5. firebase.auth.Auth
+https://firebase.google.com/docs/reference/node/firebase.auth.Auth  
+The Firebase Auth service interface.  
+Do not call this constructor directly. Instead, use 
+```js
+firebase.auth()
+```
+
+## 6. firebase.app.App
+https://firebase.google.com/docs/reference/node/firebase.app.App  
+A Firebase App holds the initialization information for a collection of services.  
+Do not call this constructor directly. Instead, use `firebase.initializeApp()` to create an app.
+## 7. 
