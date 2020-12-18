@@ -78,4 +78,5 @@ firebase.auth()
 https://firebase.google.com/docs/reference/node/firebase.app.App  
 A Firebase App holds the initialization information for a collection of services.  
 Do not call this constructor directly. Instead, use `firebase.initializeApp()` to create an app.
-## 7. 
+## 7. install bootstrap
+`npm i bootstrap react-bootstrap`
