@@ -5,4 +5,6 @@
 # steps:
 ## 1. create react app 
 `npx create-react-app react-auth-with-firebase-and-routing`
-### goto https://console.firebase.google.com/ add new firebase
+### goto https://console.firebase.google.com/ add new firebase project 
+project name : react-auth-with-firebase <br>
+Authentication -> Sign-in method -> Email/password to enable <br>
