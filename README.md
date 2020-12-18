@@ -5,3 +5,4 @@
 # steps:
 ## 1. create react app 
 `npx create-react-app react-auth-with-firebase-and-routing`
+### goto https://console.firebase.google.com/ add new firebase
