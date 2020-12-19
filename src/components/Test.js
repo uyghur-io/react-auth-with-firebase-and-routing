@@ -1,21 +1,15 @@
-import React, { useRaf } from 'react'
-import { Card, Form, Button } from 'react-bootstrap'
+import React, { useRef } from 'react';
 
-export default function Test() {
-    const emailRaf = useRaf
-    const passwordRaf = useRaf
-    const passwordConfirmRaf = useRaf
-
-    return (
-        <>
-            <Card>
-                <Card.Body>
-                    <h2 className="text-center md-4">Sign Up</h2>
-                    <Form.Group id="email">
-                        <Form.Label>Email</Form.Label>
-                    </Form.Group>
-                </Card.Body>
-            </Card>
-        </>
-    )
+export default function App() {
+  const inputEl = useRef(null);
+  const onButtonClick = () => {
+    // `current` points to the mounted text input element
+    inputEl.current.focus();
+  };
+  return (
+    <>
+      <input ref={inputEl} type="text" />
+      <button onClick={onButtonClick}>Focus the input</button>
+    </>
+  );
 }
