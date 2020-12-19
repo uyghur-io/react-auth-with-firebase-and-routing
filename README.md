@@ -80,3 +80,166 @@ A Firebase App holds the initialization information for a collection of services
 Do not call this constructor directly. Instead, use `firebase.initializeApp()` to create an app.
 ## 7. install bootstrap
 `npm i bootstrap react-bootstrap`
+## 8. React Context 
+Context provides a way to pass data through the component tree without having to pass props down manually at every level.  
+### React.createContext
+```js
+const MyContext = React.createContext(defaultValue);
+```
+```js
+<MyContext.Provider value={/* some value */}>
+```
+#### before
+```js
+class App extends React.Component {
+  render() {
+    return <Toolbar theme="dark" />;
+  }
+}
+
+function Toolbar(props) {
+  // The Toolbar component must take an extra "theme" prop
+  // and pass it to the ThemedButton. This can become painful
+  // if every single button in the app needs to know the theme
+  // because it would have to be passed through all components.
+  return (
+    <div>
+      <ThemedButton theme={props.theme} />
+    </div>
+  );
+}
+
+class ThemedButton extends React.Component {
+  render() {
+    return <Button theme={this.props.theme} />;
+  }
+}
+```
+#### after
+```js
+// Context lets us pass a value deep into the component tree
+// without explicitly threading it through every component.
+// Create a context for the current theme (with "light" as the default).
+const ThemeContext = React.createContext('light');
+
+class App extends React.Component {
+  render() {
+    // Use a Provider to pass the current theme to the tree below.
+    // Any component can read it, no matter how deep it is.
+    // In this example, we're passing "dark" as the current value.
+    return (
+      <ThemeContext.Provider value="dark">
+        <Toolbar />
+      </ThemeContext.Provider>
+    );
+  }
+}
+
+// A component in the middle doesn't have to
+// pass the theme down explicitly anymore.
+function Toolbar() {
+  return (
+    <div>
+      <ThemedButton />
+    </div>
+  );
+}
+
+class ThemedButton extends React.Component {
+  // Assign a contextType to read the current theme context.
+  // React will find the closest theme Provider above and use its value.
+  // In this example, the current theme is "dark".
+  static contextType = ThemeContext;
+  render() {
+    return <Button theme={this.context} />;
+  }
+}
+```
+## 9. React Hooks  
+### State Hook
+This example renders a counter. When you click the button, it increments the value:  
+```js
+import React, { useState } from 'react';
+
+function Example() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+```
+Declaring multiple state variables  
+```js
+function ExampleWithManyStates() {
+  // Declare multiple state variables!
+  const [age, setAge] = useState(42);
+  const [fruit, setFruit] = useState('banana');
+  const [todos, setTodos] = useState([{ text: 'Learn Hooks' }]);
+  // ...
+}
+```
+! Hooks don’t work inside classes  
+! You can also create your own Hooks  
+### Effect Hook
+The Effect Hook, `useEffect`, adds the ability to perform side effects from a function component. It serves the same purpose as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` in React classes, but unified into a single API.  
+! By using this Hook, you tell React that your component needs to do something after render.  
+For example, this component sets the document title after React updates the DOM:  
+#### before
+```js
+class Example extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+
+  componentDidMount() {
+    document.title = `You clicked ${this.state.count} times`;
+  }
+  componentDidUpdate() {
+    document.title = `You clicked ${this.state.count} times`;
+  }
+
+  render() {
+    return (
+      <div>
+        <p>You clicked {this.state.count} times</p>
+        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+          Click me
+        </button>
+      </div>
+    );
+  }
+}
+```
+#### after
+```js
+import React, { useState, useEffect } from 'react';
+
+function Example() {
+  const [count, setCount] = useState(0);
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `You clicked ${count} times`;
+  });
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+```
