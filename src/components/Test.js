@@ -1,15 +1,20 @@
-import React, { useRef } from 'react';
+import React from 'react'
+import { useAuth } from "../contexts/AuthContext"
 
-export default function App() {
-  const inputEl = useRef(null);
-  const onButtonClick = () => {
-    // `current` points to the mounted text input element
-    inputEl.current.focus();
-  };
+export default function Test() {
+  const { loginWithGoogle } = useAuth()
+
+  async function handle() {
+    try {
+      await loginWithGoogle()
+    } catch {
+      console.log('err')
+    }
+  }
+
   return (
-    <>
-      <input ref={inputEl} type="text" />
-      <button onClick={onButtonClick}>Focus the input</button>
-    </>
-  );
+    <div>
+      <button onClick={ () => handle() }>Login</button>
+    </div>
+  )
 }
